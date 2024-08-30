@@ -1,0 +1,138 @@
+---
+import { formDataToObject } from "astro:actions"
+import Layout from "../layouts/Layout.astro"
+
+if(Astro.request.method == "POST"){
+    const formDataSiswa = await Astro.request.formData()
+    const nama = formDataSiswa.get('nama')
+    const umur = formDataSiswa.get('umur')
+    const alamat = formDataSiswa.get('alamat')
+    const kelas = formDataSiswa.get('kelas')
+
+    const data ={nama, umur, alamat, kelas}
+
+    const response = await fetch('http://localhost:3221/',{
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+
+    
+}
+
+
+---
+
+<Layout title="Create Post | Students List">
+    <main>
+        <div class="container">
+            <img src="../../public/cat.png">
+            <h1>Create <span class="text-gradient">A New Student Data</span></h1>
+            <form method="post">
+                <input type="text" placeholder="Enter name" name="nama">
+                <input type="text" placeholder="Enter age" name="umur">
+                <input type="text" placeholder="Enter address" name="alamat">
+                <input type="text" placeholder="Enter class" name="kelas">
+                <button class="btn-create">Submit</button>
+            </form>
+        </div>
+    </main>
+</Layout>
+
+
+
+<style>
+    main{
+        widht: 100%;
+        height: 95vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    h1{
+		margin-bottom: 1em;
+        font-size: 1.7rem;
+		font-weight: 700;
+		line-height: 1;
+		text-align: center;
+        color: #fff;
+    }
+
+    .text-gradient{
+        background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+    }
+
+    .container{
+        position: relative;
+        margin-top: 20px;
+        padding: 0 60px;
+        padding-bottom: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-top: 20px solid #5e5a66 ;
+        border-radius: 20px;
+        background-color: #1a1625; 
+        box-shadow: 19px 18px 5px 0px rgba(0,0,0,0.55);
+        -webkit-box-shadow: 19px 18px 5px 0px rgba(0,0,0,0.55);
+        -moz-box-shadow: 19px 18px 5px 0px rgba(0,0,0,0.55);
+    }
+
+
+    .container img{
+        width: 200px;
+    }
+
+
+    .container form{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.7em;
+
+    }
+
+    .container form input{
+        padding: 8px 12px;
+        width: 300px;
+        height: 28px;
+        border: none;
+        outline: none;
+        text-transform: capitalize;
+        border-radius: 14px;
+        color: #908d96 ;
+        background: #2f2b3a ;
+    }
+
+    .btn-create{
+        margin-top: 30px;
+        width: 300px;
+        height: 50px;
+        border:none;
+        outline: none;
+        border-radius: 100px;
+        font-size: 1.3em;
+        font-weight: 800;
+        color: #1a1625;
+        transition: all 0.5s ease-in-out
+
+    }
+
+    .btn-create:hover{
+        box-shadow: 4px 8px 2px rgba(0,0,0,0.45);
+        background-image: var(--accent-gradient);
+        transform: scale(0.94);
+        transform:translateY(-6px)
+    }
+
+</style>
